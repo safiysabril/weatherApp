@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App Guide</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+        font-family: Georgia, serif;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 75%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.8);
+        border: 5px solid rgba(255, 255, 255, 0);
+        border-radius: 10px;
+        margin-bottom: 0.5em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .container2 {
+        width: 100%;
+        max-width: 75%;
+        display: flex;
+        background: rgba(255, 255, 255, 0.8);
+        border: 5px solid rgba(255, 255, 255, 0);
+        border-radius: 10px;
+        margin-bottom: 0.5em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        overflow-x: auto;
+      }
+
+      .hourly-list {
+        display: flex;
+        flex-wrap: nowrap;
+      }
+
+      .hourly-item {
+        padding: 10px;
+        margin-right: 10px;
+        flex: 0 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>
+        <%= location.components.town + ', ' + location.components.state + ', ' +
+        location.components.country %>
+      </h2>
+      <p>
+        <%= new Date(hourlyWeather.time[0]).toLocaleDateString('en-US', { month:
+        'short', day: 'numeric', year: 'numeric' }) %>
+      </p>
+      <p>
+        Latitude: <%= location.geometry.lat %> Longitude: <%=
+        location.geometry.lng %>
+      </p>
+    </div>
+
+    <div class="container">
+      <p>Temperature: <%= currentWeather.temperature %>°C</p>
+      <p>Wind Speed: <%= currentWeather.windspeed %> m/s</p>
+      <p>Wind Direction: <%= currentWeather.winddirection %>&deg</p>
+    </div>
+
+    <div class="container2">
+      <div class="hourly-list">
+        <% hourlyWeather.temperature_2m.forEach((temp, index) => { %>
+        <div class="hourly-item">
+          <p>
+            <%= new Date(hourlyWeather.time[index]).toLocaleTimeString('en-US',
+            { hour: 'numeric', minute: 'numeric', second: 'numeric' }) %>
+          </p>
+          <p><%= temp %>°C</p>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </body>
+</html>
